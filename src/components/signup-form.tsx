@@ -76,9 +76,9 @@ export function SignupForm({
       )}
       <Card>
         <CardHeader className="text-center">
-          <CardTitle className="text-xl">Login to Task Manager</CardTitle>
+          <CardTitle className="text-xl">Signup to Task Manager</CardTitle>
           <CardDescription>
-            Login with your email and password to access your account.
+            Signup with your email and password to access your account.
           </CardDescription>
         </CardHeader>
         <CardContent>
