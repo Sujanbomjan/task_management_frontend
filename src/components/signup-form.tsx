@@ -141,8 +141,8 @@ export function SignupForm({
                 <div className="text-center text-sm">
                   Already have an account?{" "}
                   <a
-                    onClick={() => navigate("/signup")}
-                    className="underline underline-offset-4"
+                    onClick={() => navigate("/login")}
+                    className="underline underline-offset-4 cursor-pointer"
                   >
                     login
                   </a>
