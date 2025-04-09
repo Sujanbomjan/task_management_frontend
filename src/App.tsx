@@ -3,7 +3,6 @@ import Dashboard from "./pages/dashboard";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import LoginPage from "./pages/loginPage";
 import SignupPage from "./pages/signupPage";
-import { AuthProvider } from "./context/AuthContext";
 import ProtectedRoute from "./components/ProtectedRoutes";
 
 function App() {
@@ -25,11 +24,7 @@ function App() {
       element: <SignupPage />,
     },
   ]);
-  return (
-    <AuthProvider>
-      <RouterProvider router={router} />
-    </AuthProvider>
-  );
+  return <RouterProvider router={router} />;
 }
 
 export default App;

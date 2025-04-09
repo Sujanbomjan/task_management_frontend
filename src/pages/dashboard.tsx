@@ -31,9 +31,12 @@ import {
 import { Navbar } from "@/components/Navbar";
 import { PlusCircle, Search } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "@/context/AuthContext";
 
 const Dashboard = () => {
   const navigate = useNavigate();
+
+  const { setToken } = useAuth();
   const { data: tasks = [], isLoading, isError } = useGetAllTasks();
   const { mutate: createTask } = useCreateTask();
   const { mutate: deleteTask } = useDeleteTask();
@@ -103,6 +106,8 @@ const Dashboard = () => {
   const handleLogout = () => {
     localStorage.removeItem("token");
     toast.success("Logged out successfully");
+    setToken(null);
+
     setTimeout(() => navigate("/login"), 1000);
   };
 
