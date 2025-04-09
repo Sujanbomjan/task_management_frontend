@@ -23,6 +23,7 @@ import { useSignup } from "@/hooks/useSignup";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
+import LoadingOverlay from "./LoadingOverlay";
 
 const formSchema = z.object({
   username: z.string().min(2, {
@@ -68,6 +69,11 @@ export function SignupForm({
   }
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
+      {signupMutation.isPending && (
+        <div className="absolute inset-0 bg-white bg-opacity-60 flex items-center justify-center z-50">
+          <LoadingOverlay isVisible={true} />
+        </div>
+      )}
       <Card>
         <CardHeader className="text-center">
           <CardTitle className="text-xl">Login to Task Manager</CardTitle>
