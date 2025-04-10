@@ -57,10 +57,10 @@ export const TasksList = ({
           className="bg-white border border-gray-200 shadow-sm hover:shadow-md transition-shadow duration-200"
         >
           <CardHeader className="pb-2">
-            <CardTitle className="text-lg font-semibold text-gray-800">
+            <CardTitle className="text-lg font-semibold text-gray-800 break-words whitespace-pre-wrap overflow-hidden">
               {task.title}
             </CardTitle>
-            <CardDescription className="mt-1 text-sm text-gray-500">
+            <CardDescription className="mt-1 text-sm text-gray-500 break-words whitespace-pre-wrap overflow-hidden">
               {task.description || "No description provided"}
             </CardDescription>
           </CardHeader>

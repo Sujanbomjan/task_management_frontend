@@ -77,7 +77,7 @@ export function LoginForm({
         <CardHeader className="text-center">
           <CardTitle className="text-xl">Login to Task Manager</CardTitle>
           <CardDescription>
-            Login with your email and password to access your account.
+            Login with your username and password to access your account.
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -93,7 +93,7 @@ export function LoginForm({
                         <FormItem>
                           <FormLabel>Username</FormLabel>
                           <FormControl>
-                            <Input placeholder="Enter you email" {...field} />
+                            <Input placeholder="Enter you username" {...field} />
                           </FormControl>
                           <FormMessage />
                         </FormItem>

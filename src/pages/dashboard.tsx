@@ -37,10 +37,14 @@ const Dashboard = () => {
   const navigate = useNavigate();
 
   const { setToken } = useAuth();
-  const { data: tasks = [], isLoading, isError } = useGetAllTasks();
-  const { mutate: createTask } = useCreateTask();
-  const { mutate: deleteTask } = useDeleteTask();
-  const { mutate: updateTask } = useUpdateTask();
+  const {
+    data: tasks = [],
+    isLoading: isFetchingTask,
+    isError,
+  } = useGetAllTasks();
+  const { mutate: createTask, isPending: isCreating } = useCreateTask();
+  const { mutate: deleteTask, isPending: isDeleting } = useDeleteTask();
+  const { mutate: updateTask, isPending: isUpdating } = useUpdateTask();
   const [newTask, setNewTask] = useState({ title: "", description: "" });
   const [editTask, setEditTask] = useState<{
     id: string;
@@ -110,28 +114,20 @@ const Dashboard = () => {
 
     setTimeout(() => navigate("/login"), 1000);
   };
-
-  if (isLoading) {
+  if (isFetchingTask) {
     return (
-      <div className="min-h-screen bg-gray-50">
-        <Navbar
-          username={localStorage.getItem("username") || "User"}
-          handleLogout={handleLogout}
-        />
-        <div className="container mx-auto p-6 max-w-6xl">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
-            {[...Array(6)].map((_, i) => (
-              <Skeleton
-                key={i}
-                className="w-full h-48 rounded-xl bg-gradient-to-r from-blue-100 to-blue-200"
-              />
-            ))}
-          </div>
+      <div className="container mx-auto p-6 max-w-6xl">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
+          {[...Array(6)].map((_, i) => (
+            <Skeleton
+              key={i}
+              className="w-full h-48 rounded-xl bg-gradient-to-r from-blue-100 to-blue-200"
+            />
+          ))}
         </div>
       </div>
     );
   }
-
   if (isError) {
     return (
       <div className="min-h-screen bg-gray-50">
@@ -139,6 +135,7 @@ const Dashboard = () => {
           username={localStorage.getItem("username") || "User"}
           handleLogout={handleLogout}
         />
+
         <div className="container mx-auto p-6 max-w-6xl">
           <Card className="my-8 border-red-200 shadow-lg">
             <CardHeader className="bg-red-50">
@@ -227,6 +224,8 @@ const Dashboard = () => {
                       placeholder="Enter task description (optional)"
                       rows={3}
                       value={newTask.description}
+                      className="w-full resize-none break-words overflow-wrap break-all"
+                      wrap="soft"
                       onChange={(e) =>
                         setNewTask({ ...newTask, description: e.target.value })
                       }
@@ -274,13 +273,24 @@ const Dashboard = () => {
         </div>
 
         {/* Tasks List */}
-        <div className="mt-6">
-          <TasksList
-            tasks={filteredTasks}
-            onEdit={setEditTask}
-            onDelete={handleDelete}
-          />
-        </div>
+        {isCreating || isDeleting || isUpdating ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
+            {[...Array(6)].map((_, i) => (
+              <Skeleton
+                key={i}
+                className="w-full h-48 rounded-xl bg-gradient-to-r from-blue-100 to-blue-200"
+              />
+            ))}
+          </div>
+        ) : (
+          <div className="mt-6">
+            <TasksList
+              tasks={filteredTasks}
+              onEdit={setEditTask}
+              onDelete={handleDelete}
+            />
+          </div>
+        )}
       </div>
 
       {/* Edit Task Dialog */}
